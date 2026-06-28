@@ -125,7 +125,6 @@
         }
         .badge.show { transform: scale(1); }
 
-        /* تصغير حجم خط العنوان تكة كمان لثبات مثالي في سطر واحد */
         .header-bottom-addr { 
             width: 100%; 
             padding: 4px 12px 0 12px; 
@@ -166,7 +165,6 @@
         .food-card .item-img-box img { width: 100%; height: 100%; object-fit: cover; }
         .food-card .food-info { flex: 1; position: relative; overflow: hidden; }
         
-        /* كروت الوجبات والطواجن الكبيرة - تثبيت الارتفاع الجديد على 125 بكسل */
         .food-card-large {
             background: var(--white); border-radius: 18px; margin-bottom: 12px; display: flex;
             flex-direction: column; padding: 10px; gap: 6px; box-shadow: var(--card-shadow);
@@ -258,6 +256,42 @@
 
         .user-fields input { background: var(--bg); border: 1px solid transparent; padding: 14px; border-radius: 14px; width: 100%; margin-bottom: 10px; color: var(--main-text); text-align: right; font-size: 0.95rem; }
         .user-fields input:focus { border-color: var(--accent); outline: none; }
+        
+        /* استايل احترافي متناسق لخانة اختيار طريقة الدفع الجديدة */
+        .payment-box {
+            background: var(--bg);
+            padding: 12px;
+            border-radius: 14px;
+            margin-bottom: 15px;
+            text-align: right;
+        }
+        .payment-title {
+            font-size: 0.85rem;
+            font-weight: 800;
+            color: var(--desc-text);
+            display: block;
+            margin-bottom: 8px;
+        }
+        .payment-options {
+            display: flex;
+            gap: 15px;
+        }
+        .pay-label {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            cursor: pointer;
+            color: var(--main-text);
+        }
+        .pay-label input {
+            accent-color: var(--accent);
+            width: 17px;
+            height: 17px;
+            cursor: pointer;
+        }
+
         .submit-btn { background: var(--accent); color: white; border: none; padding: 16px; border-radius: 18px; width: 100%; font-weight: 800; font-size: 1.1rem; cursor: pointer; box-shadow: 0 4px 12px rgba(231, 29, 29, 0.3); }
     </style>
 </head>
@@ -324,6 +358,21 @@
                 <input type="text" id="uName" placeholder="الاسم بالكامل">
                 <input type="tel" id="uPhone" placeholder="رقم الموبايل">
                 <input type="text" id="uAddr" placeholder="العنوان بالتفصيل">
+                
+                <!-- 💰 إضافة الخانة الاحترافية لاختيار طريقة الدفع وتحويل الأموال هنا -->
+                <div class="payment-box">
+                    <span class="payment-title">💰 اختر طريقة تحويل الأموال:</span>
+                    <div class="payment-options">
+                        <label class="pay-label">
+                            <input type="radio" name="payMethod" value="فودافون كاش" checked>
+                            <span>فودافون كاش</span>
+                        </label>
+                        <label class="pay-label">
+                            <input type="radio" name="payMethod" value="إنستا باي">
+                            <span>إنستا باي</span>
+                        </label>
+                    </div>
+                </div>
             </div>
             <button class="submit-btn" onclick="sendToWA()">تأكيد الطلب</button>
         </div>
@@ -619,7 +668,11 @@
             const n = document.getElementById('uName').value.trim(), p = document.getElementById('uPhone').value.trim(), a = document.getElementById('uAddr').value.trim();
             if(!n || !p || !a || cart.length === 0) return alert("يرجى ملء جميع الحقول واختيار الأصناف المطلوبة لتأكيد طلبك.");
             
-            let msg = `*طلب جديد - مطعم الرصيف البحري*\n──────────────\n👤 *الاسم:* ${n}\n📱 *الموبايل:* ${p}\n📍 *العنوان:* ${a}\n──────────────\n📦 *الطلبات:*\n`;
+            // قراءة خيار طريقة الدفع الحالي المختار من قبل المستخدم
+            const payMethodEl = document.querySelector('input[name="payMethod"]:checked');
+            const payMethod = payMethodEl ? payMethodEl.value : "فودافون كاش";
+
+            let msg = `*طلب جديد - مطعم الرصيف البحري*\n──────────────\n👤 *الاسم:* ${n}\n📱 *الموبايل:* ${p}\n📍 *العنوان:* ${a}\n💰 *طريقة الدفع:* ${payMethod}\n──────────────\n📦 *الطلبات:*\n`;
             const summary = {};
             cart.forEach(item => {
                 const key = `${item.name} (${item.size})`;
