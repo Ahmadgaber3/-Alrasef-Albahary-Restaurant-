@@ -1,0 +1,25 @@
+{
+  "id": "/",
+  "scope": "/",
+  "name": "مطعم الرصيف البحري | المنيو الرسمي",
+  "short_name": "الرصيف البحري",
+  "start_url": "/index.html",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0d0d0d",
+  "theme_color": "#e71d1d",
+  "icons": [
+    {
+      "src": "images/logooo.jpg",
+      "sizes": "192x192",
+      "type": "image/jpeg",
+      "purpose": "any"
+    },
+    {
+      "src": "images/logooo.jpg",
+      "sizes": "512x512",
+      "type": "image/jpeg",
+      "purpose": "any"
+    }
+  ]
+}
